@@ -7,66 +7,6 @@ local ADD_R_TO_A = 4
 local DECR_A   = 5
 local RETURN_A   = 6
 
-local function jump_if_a(bytecode, regs, pc, a)
-  local target = bytecode[pc]
-  pc = pc + 1
-  if a ~= 0 then
-    pc = target
-  end
-  return pc, a
-end
-
-local function mov_a_r(bytecode, regs, pc, a)
-  local n = bytecode[pc]
-  pc = pc + 1
-  regs[n] = a
-  return pc, a
-end
-
-local function mov_r_a(bytecode, regs, pc, a)
-  local n = bytecode[pc]
-  pc = pc + 1
-  a = regs[n]
-  return pc, a
-end
-
-local function add_r_to_a(bytecode, regs, pc, a)
-  local n = bytecode[pc]
-  pc = pc + 1
-  a = a + regs[n]
-  return pc, a
-end
-
-local function decr_a(bytecode, regs, pc, a)
-  a = a - 1
-  return pc, a
-end
-
--- the main interpreter loop
-local function interpret (bytecode, a)
-  local regs = {
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  }
-  local pc = 1
-  while true do
-    local opcode = bytecode[pc]
-    pc = pc + 1
-    if opcode == JUMP_IF_A then
-      pc, a = jump_if_a(bytecode, regs, pc, a)
-    elseif opcode == MOV_A_R then
-      pc, a = mov_a_r(bytecode, regs, pc, a)
-    elseif opcode == MOV_R_A then
-      pc, a = mov_r_a(bytecode, regs, pc, a)
-    elseif opcode == ADD_R_TO_A then
-      pc, a = add_r_to_a(bytecode, regs, pc, a)
-    elseif opcode == DECR_A then
-      pc, a = decr_a(bytecode, regs, pc, a)
-    elseif opcode == RETURN_A then
-      return a
-    end
-  end
-end
-
 local function jit_interpret(bytecode, a)
   f_str = [[
 function _jit(a)
