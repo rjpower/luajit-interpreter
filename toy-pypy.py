@@ -44,7 +44,8 @@ def interpret(bytecode, a):
            a -= 1
        elif opcode == RETURN_A:
            return a
- 
+
+# I don't know why str.strip doesn't work in RPython.
 def strip(w):
   start = 0
   while start < len(w):
@@ -62,6 +63,7 @@ def strip(w):
 # __________  Entry point  __________
 def entry_point(argv):
     bytecode_str = streamio.open_file_as_stream(argv[1]).readall()
+    bytecode_list = [strip(w) for w in bytecode_str.split(',')]
     bytecode = []
     for i, w in enumerate(bytecode_list):
       if w == '': continue
