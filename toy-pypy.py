@@ -62,14 +62,9 @@ def strip(w):
 # __________  Entry point  __________
 def entry_point(argv):
     bytecode_str = streamio.open_file_as_stream(argv[1]).readall()
-    bytecode_list = [strip(w) for w in bytecode_str.split(',')]
-
     bytecode = []
     for i, w in enumerate(bytecode_list):
-      print "%d : '%s'" % (i, w)
-
       if w == '': continue
-
       if w == 'JUMP_IF_A': bytecode.append(JUMP_IF_A)
       elif w == 'MOV_A_R': bytecode.append(MOV_A_R)
       elif w == 'MOV_R_A': bytecode.append(MOV_R_A)
@@ -78,7 +73,6 @@ def entry_point(argv):
       elif w == 'RETURN_A': bytecode.append(RETURN_A)
       else: bytecode.append(int(w))
 
-    print bytecode
     result = interpret(bytecode, int(argv[2]))
     print result
     return 0
