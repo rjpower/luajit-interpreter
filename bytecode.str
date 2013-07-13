@@ -1,0 +1,12 @@
+MOV_A_R,    0,
+MOV_A_R,    1,
+MOV_R_A,    0, 
+DECR_A,
+MOV_A_R,    0,
+MOV_R_A,    2, 
+ADD_R_TO_A, 1,
+MOV_A_R,    2,
+MOV_R_A,    0, 
+JUMP_IF_A,  4,
+MOV_R_A,    2,
+RETURN_A
