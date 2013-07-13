@@ -10,11 +10,9 @@ local RETURN_A   = 6
 local function jit_interpret(bytecode, a)
   f_str = [[
 function _jit(a)
-local reg_0 = 0
-local reg_1 = 0
-local reg_2 = 0
-local reg_3 = 0
-local reg_4 = 0
+  local reg = {
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  }
   ]]
 
   local pc = 1
@@ -36,19 +34,19 @@ goto op_%d
       local n = bytecode[pc]
       pc = pc + 1
     f_str = f_str .. string.format([[
-a = reg_%d
+a = reg[%d]
 ]], n)
     elseif opcode == MOV_A_R then
       local n = bytecode[pc]
       pc = pc + 1
     f_str = f_str .. string.format([[
-reg_%d = a
+reg[%d] = a
 ]], n)
     elseif opcode == ADD_R_TO_A then
       local n = bytecode[pc]
       pc = pc + 1
       f_str = f_str .. string.format([[
-a = a + reg_%d
+a = a + reg[%d]
 ]], n)
     elseif opcode == DECR_A then
       f_str = f_str .. string.format([[
@@ -62,11 +60,6 @@ return a
   end
 
 f_str = f_str .. 'end\n'
-
--- local module_f = io.open ('./foo.lua', 'w+')
--- module_f:write(f_str)
--- module_f:close()
--- require('./foo')
 
 loadstring(f_str)()
 return _jit(a)

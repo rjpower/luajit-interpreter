@@ -15,7 +15,7 @@ tlrjitdriver = JitDriver(greens = ['pc', 'bytecode'], reds = ['a', 'regs'])
  
 # the main interpreter loop
 def interpret(bytecode, a):
-   regs = [0] * 256
+   regs = [0] * 16
    pc = 0
    while True:
        tlrjitdriver.jit_merge_point(bytecode=bytecode, pc=pc, a=a, regs=regs)

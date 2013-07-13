@@ -12,7 +12,7 @@ RETURN_A   = 6
  
 # the main interpreter loop
 def interpret(bytecode, a):
-   regs = [0] * 256
+   regs = [0] * 16
    pc = 0
    while True:
        opcode = bytecode[pc]
